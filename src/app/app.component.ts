@@ -7,8 +7,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ng4-complete-guide';
-  loadedFeature = '';
-  onNavegate(feature: string) {
-    this.loadedFeature = feature;
-  }
 }
