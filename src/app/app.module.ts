@@ -1,49 +1,49 @@
+import { HeaderComponent } from './header/header.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { RecipesModule } from './recipes/recipes-module';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { RecipesComponent } from './recipes/recipes.component';
-import { RecipesListComponent } from './recipes/recipes-list/recipes-list.component';
-import { RecipesDetailComponent } from './recipes/recipes-detail/recipes-detail.component';
-import { RecipesItemComponent } from './recipes/recipes-list/recipes-item/recipes-item.component';
-import { ShoppingListComponent } from './shopping-list/shopping-list.component';
-import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-edit.component';
 import { ExerciseComponent } from './exercise/exercise.component';
 import { BasicHighlightDirective } from './basic-highlight/basic-highlight.directive';
 import { BetterHighlightDirective } from './better-highlight/better-highlight.directive';
-import { DropdownDirective } from './shared/dropdown.directive';
 import { AppRoutingModule } from './app-routing.module';
-import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
 import { ShoppingListService } from './shopping-list/shopping-list.service';
 import { RecipeService } from './recipes/recipe.service';
-import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
+import { AuthInerceptorService } from './auth/auth/auth-interceptor.service';
+import { ShoppingListModule } from './shopping-list/shopping-list-module';
+import { SharedModule } from './shared/shared-module';
+import { AuthModule } from './auth/auth/auth-module';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    RecipesComponent,
-    RecipesListComponent,
-    RecipesDetailComponent,
-    RecipesItemComponent,
-    ShoppingListComponent,
-    ShoppingEditComponent,
     ExerciseComponent,
     BasicHighlightDirective,
     BetterHighlightDirective,
-    DropdownDirective,
-    RecipeStartComponent,
-    RecipeEditComponent
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    // RecipesModule,
+    // ShoppingListModule,
+    SharedModule,
+    AuthModule
+
   ],
-  providers: [ShoppingListService, RecipeService ],
+  providers: [ShoppingListService, RecipeService, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInerceptorService,
+    multi: true
+
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
